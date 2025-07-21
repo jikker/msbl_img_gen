@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>梅山檳榔粒數</title>
+<style>
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Helvetica Neue", sans-serif;
+    background: #000000;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    margin: 0 0 30px 0;
+  }
+
+  .input-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+
+  .input-item {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 15px;
+  }
+
+  .input-label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .number-control {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .number-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    color: #ffffff;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+
+  .number-btn:active {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .number-value {
+    flex: 1;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+    padding: 0 10px;
+    min-width: 60px;
+  }
+
+  .date-toggle {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 30px;
+  }
+
+  .checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .checkbox-container input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+  }
+
+  .checkbox-container label {
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .save-btn {
+    width: 100%;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-bottom: 30px;
+  }
+
+  .save-btn:active {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .canvas-wrapper {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+  }
+
+  canvas {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 8px;
+  }
+
+  @media (max-width: 380px) {
+    .input-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>梅山檳榔粒數</h1>
+
+  <div class="input-grid">
+    <div class="input-item">
+      <label class="input-label">小多</label>
+      <div class="number-control">
+        <button class="number-btn" onclick="changeValue(0, -1)">－</button>
+        <div class="number-value" id="val0">25</div>
+        <button class="number-btn" onclick="changeValue(0, 1)">＋</button>
+      </div>
+    </div>
+    
+    <div class="input-item">
+      <label class="input-label">幼</label>
+      <div class="number-control">
+        <button class="number-btn" onclick="changeValue(1, -1)">－</button>
+        <div class="number-value" id="val1">13</div>
+        <button class="number-btn" onclick="changeValue(1, 1)">＋</button>
+      </div>
+    </div>
+    
+    <div class="input-item">
+      <label class="input-label">普通</label>
+      <div class="number-control">
+        <button class="number-btn" onclick="changeValue(2, -1)">－</button>
+        <div class="number-value" id="val2">18</div>
+        <button class="number-btn" onclick="changeValue(2, 1)">＋</button>
+      </div>
+    </div>
+    
+    <div class="input-item">
+      <label class="input-label">大幼</label>
+      <div class="number-control">
+        <button class="number-btn" onclick="changeValue(3, -1)">－</button>
+        <div class="number-value" id="val3">12</div>
+        <button class="number-btn" onclick="changeValue(3, 1)">＋</button>
+      </div>
+    </div>
+    
+    <div class="input-item">
+      <label class="input-label">大多</label>
+      <div class="number-control">
+        <button class="number-btn" onclick="changeValue(4, -1)">－</button>
+        <div class="number-value" id="val4">17</div>
+        <button class="number-btn" onclick="changeValue(4, 1)">＋</button>
+      </div>
+    </div>
+    
+    <div class="input-item">
+      <label class="input-label">干</label>
+      <div class="number-control">
+        <button class="number-btn" onclick="changeValue(5, -1)">－</button>
+        <div class="number-value" id="val5">26</div>
+        <button class="number-btn" onclick="changeValue(5, 1)">＋</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="date-toggle">
+    <div class="checkbox-container">
+      <input type="checkbox" id="addDate">
+      <label for="addDate">在圖片下方加上今天日期</label>
+    </div>
+  </div>
+
+  <button class="save-btn" onclick="save()">
+    <span><a href="https://emoji.gg/emoji/4403_line"><img src="https://cdn3.emoji.gg/emojis/4403_line.png" width="24px" height="24px" alt="line"></a></span>
+    <span>用Line分享圖片</span>
+  </button>
+
+  <div class="canvas-wrapper">
+    <canvas id="c"></canvas>
+  </div>
+</div>
+
+<script>
+const labels = ["小多", "幼", "普通", "大幼", "大多", "干"];
+const defaultValues = [25, 13, 18, 12, 17, 26];
+const fontSize = 100;
+const lineHeight = fontSize * 1.4;
+const dateFontSize = 50;
+const canvas = document.getElementById("c");
+const dpr = window.devicePixelRatio || 1;
+
+// Cookie 操作函數
+function setCookie(name, value, days) {
+  var expires = "";
+  if (days) {
+    var date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    expires = "; expires=" + date.toUTCString();
+  }
+  document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+
+function getCookie(name) {
+  var nameEQ = name + "=";
+  var ca = document.cookie.split(';');
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
+}
+
+// 載入儲存的數據
+function loadSavedData() {
+  var savedValues = getCookie('chartValues');
+  var savedDate = getCookie('chartShowDate');
+  
+  if (savedValues) {
+    return {
+      values: savedValues.split(',').map(function(v) { return parseInt(v) || 0; }),
+      showDate: savedDate === 'true'
+    };
+  }
+  return {
+    values: defaultValues.slice(),
+    showDate: false
+  };
+}
+
+// 儲存數據
+function saveData() {
+  setCookie('chartValues', values.join(','), 30); // 保存30天
+  setCookie('chartShowDate', document.getElementById('addDate').checked, 30);
+}
+
+// 初始化
+const savedData = loadSavedData();
+const values = savedData.values;
+
+// 設定初始值
+for (var i = 0; i < values.length; i++) {
+  document.getElementById('val' + i).textContent = values[i];
+}
+document.getElementById('addDate').checked = savedData.showDate;
+
+// 監聽變化並儲存
+document.getElementById('addDate').addEventListener('change', function() {
+  draw();
+  saveData();
+});
+
+draw();
+
+function changeValue(index, delta) {
+  values[index] = Math.max(0, values[index] + delta);
+  document.getElementById('val' + index).textContent = values[index];
+  draw();
+  saveData(); // 儲存變更
+}
+
+function draw() {
+  const showDate = document.getElementById("addDate").checked;
+  const canvasWidth = Math.min(window.innerWidth - 70, 400);
+  const scale = canvasWidth / 800;
+  const width = 800;
+  const extraHeight = showDate ? dateFontSize * 2 : 0;
+  const height = lineHeight * labels.length + 60 + extraHeight;
+
+  canvas.width = width * dpr;
+  canvas.height = height * dpr;
+  canvas.style.width = canvasWidth + "px";
+  canvas.style.height = (height * scale) + "px";
+
+  const ctx = canvas.getContext("2d");
+  ctx.scale(dpr, dpr);
+
+  // 黑色背景
+  ctx.fillStyle = "black";
+  ctx.fillRect(0, 0, width, height);
+
+  // 白色文字
+  ctx.fillStyle = "white";
+  ctx.font = "bold " + fontSize + "px 'PingFang TC', 'Microsoft JhengHei', sans-serif";
+  ctx.textBaseline = "top";
+
+  // 繪製每一行
+  labels.forEach((label, i) => {
+    const y = 30 + i * lineHeight;
+    ctx.textAlign = "left";
+    ctx.fillText(label, 60, y);
+    ctx.textAlign = "right";
+    ctx.fillText(values[i].toString(), width - 60, y);
+  });
+
+  // 繪製日期
+  if (showDate) {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const dateStr = year + "/" + month + "/" + day;
+
+    ctx.font = "bold " + dateFontSize + "px 'PingFang TC', 'Microsoft JhengHei', sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(dateStr, width / 2, height - dateFontSize - 20);
+  }
+}
+
+function save() {
+  canvas.toBlob(function(blob) {
+    const file = new File([blob], "chart.png", { type: "image/png" });
+
+    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+      navigator.share({
+        title: "圖片產出",
+        text: "儲存或分享圖片",
+        files: [file]
+      }).catch(function(err) {
+        if (err.name !== 'AbortError') {
+          alert("儲存失敗：" + err.message);
+        }
+      });
+    } else {
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "chart.png";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(a.href);
+    }
+  }, "image/png");
+}
+</script>
+
+</body>
+</html>
