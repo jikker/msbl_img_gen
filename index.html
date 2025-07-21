@@ -373,7 +373,7 @@ function save() {
     if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
       navigator.share({
         title: "圖片產出",
-        text: "儲存或分享圖片",
+        text: "",
         files: [file]
       }).catch(function(err) {
         if (err.name !== 'AbortError') {
