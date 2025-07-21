@@ -230,7 +230,7 @@
   </div>
 
   <button class="save-btn" onclick="save()">
-    <span><a href="https://emoji.gg/emoji/4403_line"><img src="https://cdn3.emoji.gg/emojis/4403_line.png" width="24px" height="24px" alt="line"></a></span>
+    <span><a href="#"><img src="https://cdn3.emoji.gg/emojis/4403_line.png" width="24px" height="24px" alt="line"></a></span>
     <span>用Line分享圖片</span>
   </button>
 
@@ -372,7 +372,7 @@ function save() {
 
     if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
       navigator.share({
-        title: "圖片產出",
+        title: "",
         text: "",
         files: [file]
       }).catch(function(err) {
